@@ -1,7 +1,7 @@
-﻿using E_CommerceWeb.Models;
+﻿using E_Commerce.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace E_CommerceWeb.Data
+namespace E_Commerce.Persistence.Data
 {
     public class ApplicationDbContext: DbContext
     {
