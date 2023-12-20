@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace E_Commerve.Persistence.Repositories
 {
@@ -17,6 +18,7 @@ namespace E_Commerve.Persistence.Repositories
         {
             _context = context;
             dbSet = _context.Set<T>();
+            _context.Products.Include(u => u.Category).Include(u => u.CategoryId);
         }
 
         public void Add(T entity)
@@ -24,21 +26,47 @@ namespace E_Commerve.Persistence.Repositories
             dbSet.Add(entity);
         }
 
-        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var property in includeProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            return dbSet.ToList();
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var property in includeProperties.Split(new char[] {','}, 
+                    StringSplitOptions.RemoveEmptyEntries)) 
+                {
+                    query = query.Include(property);
+                }
+            }
+            return query.ToList();
         }
 
-        public T GetById(int? id)
+        public T GetById(int? id = 0, string? includeProperties = null)
         {
+            IQueryable<T> query = dbSet;
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var property in includeProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
             return dbSet.Find(id);
         }
 

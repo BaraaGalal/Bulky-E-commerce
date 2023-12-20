@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace E_Commerce.Domain.Models
 {
@@ -13,5 +14,7 @@ namespace E_Commerce.Domain.Models
         [DisplayName("Display Order")]
         [Range(1, 100)]
         public int DisplayOrder { get; set; }
+        [JsonIgnore]
+        public IList<Product> Products { get; set; } = new List<Product>();
     }
 } 

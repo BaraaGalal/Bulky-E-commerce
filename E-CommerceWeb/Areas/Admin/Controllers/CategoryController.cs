@@ -17,7 +17,7 @@ namespace E_Commerce.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var categores = _unitOfWork.CategoryRepository.GetAll();
+            var categores = _unitOfWork.CategoryRepository.GetAll(includeProperties:"Category").ToList();
             return View(categores);
         }
 
