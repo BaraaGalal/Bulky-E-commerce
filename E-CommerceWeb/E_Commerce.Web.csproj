@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\E-Commerce.Utility\E_Commerce.Utility.csproj" />
     <ProjectReference Include="..\E-Commerve.Persistence\E_Commerce.Persistence.csproj" />
   </ItemGroup>
 

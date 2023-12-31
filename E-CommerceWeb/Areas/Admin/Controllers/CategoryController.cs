@@ -1,11 +1,14 @@
 ﻿using E_Commerce.Domain.Models;
 using E_Commerce.Persistence.Data;
+using E_Commerce.Utility;
 using E_Commerve.Persistence.Repositories.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
