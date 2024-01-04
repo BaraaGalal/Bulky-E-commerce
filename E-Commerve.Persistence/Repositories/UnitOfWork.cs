@@ -14,12 +14,14 @@ namespace E_Commerve.Persistence.Repositories
         public ICategoryRepository CategoryRepository { get; private set; }
 
         public IProductRepository ProductRepository { get; private set; }
+        public ICompanyRepository CompanyRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             CategoryRepository = new CategoryRepository(context);
             ProductRepository = new ProductRepository(context);
+            CompanyRepository = new CompanyRepository(context);
         }
 
 
