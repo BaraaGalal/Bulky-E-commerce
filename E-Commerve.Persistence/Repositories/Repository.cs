@@ -1,12 +1,7 @@
 ﻿using E_Commerce.Persistence.Data;
 using E_Commerve.Persistence.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Linq.Expressions;
 
 namespace E_Commerve.Persistence.Repositories
 {
@@ -41,13 +36,16 @@ namespace E_Commerve.Persistence.Repositories
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+                query = query.Where(filter);
+
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var property in includeProperties.Split(new char[] {','}, 
-                    StringSplitOptions.RemoveEmptyEntries)) 
+                foreach (var property in includeProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(property);
                 }

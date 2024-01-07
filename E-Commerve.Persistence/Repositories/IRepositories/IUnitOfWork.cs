@@ -11,6 +11,8 @@ namespace E_Commerve.Persistence.Repositories.IRepositories
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
         ICompanyRepository CompanyRepository { get; }
+        IShoppingCartRepository ShoppingCartRepository { get; }
+        IApplicationUserRepository ApplicationUserRepository { get; }
 
         void Save();
     }

@@ -15,6 +15,8 @@ namespace E_Commerve.Persistence.Repositories
 
         public IProductRepository ProductRepository { get; private set; }
         public ICompanyRepository CompanyRepository { get; private set; }
+        public IShoppingCartRepository ShoppingCartRepository { get; private set; }
+        public IApplicationUserRepository ApplicationUserRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -22,6 +24,8 @@ namespace E_Commerve.Persistence.Repositories
             CategoryRepository = new CategoryRepository(context);
             ProductRepository = new ProductRepository(context);
             CompanyRepository = new CompanyRepository(context);
+            ShoppingCartRepository = new ShoppingCartRepository(context);
+            ApplicationUserRepository = new ApplicationUserRepository(context);
         }
 
 
