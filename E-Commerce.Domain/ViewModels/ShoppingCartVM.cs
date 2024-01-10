@@ -1,4 +1,4 @@
-﻿using E_Commerce.Domain.Models;
+﻿ using E_Commerce.Domain.Models;
 
 namespace E_Commerce.Domain.ViewModels
 {
@@ -6,6 +6,6 @@ namespace E_Commerce.Domain.ViewModels
     {
 
         public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
-        public double OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; }
     }
 }

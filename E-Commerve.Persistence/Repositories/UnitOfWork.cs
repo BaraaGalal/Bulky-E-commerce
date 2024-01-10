@@ -1,10 +1,5 @@
 ﻿using E_Commerce.Persistence.Data;
 using E_Commerve.Persistence.Repositories.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace E_Commerve.Persistence.Repositories
 {
@@ -17,6 +12,8 @@ namespace E_Commerve.Persistence.Repositories
         public ICompanyRepository CompanyRepository { get; private set; }
         public IShoppingCartRepository ShoppingCartRepository { get; private set; }
         public IApplicationUserRepository ApplicationUserRepository { get; private set; }
+        public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
+        public IOrderDetailRepository OrderDetailRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -26,8 +23,9 @@ namespace E_Commerve.Persistence.Repositories
             CompanyRepository = new CompanyRepository(context);
             ShoppingCartRepository = new ShoppingCartRepository(context);
             ApplicationUserRepository = new ApplicationUserRepository(context);
+            OrderHeaderRepository = new OrderHeaderRepository(context);
+            OrderDetailRepository = new OrderDetailRepository(context);
         }
-
 
         public void Save()
         {

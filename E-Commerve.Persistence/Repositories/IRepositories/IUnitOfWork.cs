@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace E_Commerve.Persistence.Repositories.IRepositories
+﻿namespace E_Commerve.Persistence.Repositories.IRepositories
 {
     public interface IUnitOfWork
     {
@@ -13,6 +7,8 @@ namespace E_Commerve.Persistence.Repositories.IRepositories
         ICompanyRepository CompanyRepository { get; }
         IShoppingCartRepository ShoppingCartRepository { get; }
         IApplicationUserRepository ApplicationUserRepository { get; }
+        IOrderHeaderRepository OrderHeaderRepository { get; }
+        IOrderDetailRepository OrderDetailRepository { get; }
 
         void Save();
     }
