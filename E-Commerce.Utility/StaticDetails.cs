@@ -25,5 +25,9 @@ namespace E_Commerce.Utility
         public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
         public const string PaymentStatusRejected = "Rejected";
 
+
+        //public const string PaymentStPaymentStatuStaticDetailselayedPaymentatusRejected = "PaymentStPaymentStatuStaticDetailselayedPaymentatusRejected";
+        public const string PaymentStatuStaticDetailselayedPayment = "PaymentStatuStaticDetailselayedPayment";
+
     }
 }

@@ -38,7 +38,7 @@ namespace E_Commerve.Persistence.Repositories
 
             if (!string.IsNullOrEmpty(paymentIntentId))
             {
-                orderFromDb.SessionId = sessionId;
+                orderFromDb.PaymentIntentId = paymentIntentId;
                 orderFromDb.PaymentDate = DateTime.Now;
             }
 

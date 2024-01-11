@@ -1,7 +1,6 @@
 ﻿using E_Commerce.Domain.Models;
 using E_Commerce.Domain.ViewModels;
 using E_Commerce.Utility;
-using E_Commerve.Persistence.Repositories;
 using E_Commerve.Persistence.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +54,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
 
             ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUserRepository.Get(w => w.Id == userId);
 
-
             ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
             ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
             ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
@@ -72,7 +70,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
             return View(ShoppingCartVM);
         }
 
-
         [HttpPost]
         [ActionName("Summary")]
         public IActionResult SummaryPost(ShoppingCartVM shoppingCartVM)
@@ -87,7 +84,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
             ApplicationUser applicationUser = _unitOfWork.ApplicationUserRepository.Get(u => u.Id == userId);
-
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
@@ -153,7 +149,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
                     options.LineItems.Add(sessionLineItem);
                 }
 
-
                 var service = new SessionService();
                 Session session = service.Create(options);
                 _unitOfWork.OrderHeaderRepository.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
@@ -162,10 +157,8 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
                 return new StatusCodeResult(303);
 
             }
-
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
-
 
         public IActionResult OrderConfirmation(int id)
         {
@@ -228,7 +221,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Count <= 50)
@@ -237,7 +229,6 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
             {
                 if (shoppingCart.Count <= 100)
                     return shoppingCart.Product.Price50;
-
                 else
                     return shoppingCart.Product.Price100;
             }
