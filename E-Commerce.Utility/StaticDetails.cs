@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace E_Commerce.Utility
+﻿namespace E_Commerce.Utility
 {
     public static class StaticDetails
     {
@@ -26,8 +20,10 @@ namespace E_Commerce.Utility
         public const string PaymentStatusRejected = "Rejected";
 
 
-        //public const string PaymentStPaymentStatuStaticDetailselayedPaymentatusRejected = "PaymentStPaymentStatuStaticDetailselayedPaymentatusRejected";
         public const string PaymentStatuStaticDetailselayedPayment = "PaymentStatuStaticDetailselayedPayment";
+
+
+        public const string SessionCart = "SessionShoppingCart";
 
     }
 }

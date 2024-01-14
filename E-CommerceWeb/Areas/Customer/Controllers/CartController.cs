@@ -176,7 +176,7 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
                     _unitOfWork.OrderHeaderRepository.UpdateStatus(id, StaticDetails.StatusApproved, StaticDetails.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
-                //HttpContext.Session.Clear();
+                HttpContext.Session.Clear();
             }
 
             //_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Bulky Book",
@@ -204,7 +204,11 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(w => w.Id == cartId);
             if (cartFromDb.Count <= 1)
+            {
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCartRepository
+                    .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
+            }
             else
                 cartFromDb.Count -= 1;
 
@@ -215,11 +219,13 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
         public IActionResult Remove(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(w => w.Id == cartId);
+            HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCartRepository
+                .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count()-1);
             _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
-
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
+
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {

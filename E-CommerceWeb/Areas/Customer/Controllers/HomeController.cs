@@ -1,6 +1,9 @@
 ﻿using E_Commerce.Domain.Models;
+using E_Commerce.Domain.ViewModels;
+using E_Commerce.Utility;
 using E_Commerve.Persistence.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -46,13 +49,22 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.ApplicationUserId == userId &&
             u.ProductId == shoppingCart.ProductId);
 
+
             if (cartFromDb != null)
+            {
                 cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.Save();
+            }
+
             else
+            {
                 _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, 
+                    _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId).Count());
+            }
 
             TempData["success"] = "Cart updated successfully";
-            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }
