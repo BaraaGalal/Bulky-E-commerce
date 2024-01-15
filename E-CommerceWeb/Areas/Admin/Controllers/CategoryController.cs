@@ -1,5 +1,4 @@
 ﻿using E_Commerce.Domain.Models;
-using E_Commerce.Persistence.Data;
 using E_Commerce.Utility;
 using E_Commerve.Persistence.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;

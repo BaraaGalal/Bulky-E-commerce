@@ -220,7 +220,7 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(w => w.Id == cartId);
             HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCartRepository
-                .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count()-1);
+                .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
