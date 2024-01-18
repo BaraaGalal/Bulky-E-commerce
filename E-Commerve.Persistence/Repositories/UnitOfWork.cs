@@ -14,6 +14,7 @@ namespace E_Commerve.Persistence.Repositories
         public IApplicationUserRepository ApplicationUserRepository { get; private set; }
         public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
         public IOrderDetailRepository OrderDetailRepository { get; private set; }
+        public IProductImageRepository ProductImageRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -25,6 +26,7 @@ namespace E_Commerve.Persistence.Repositories
             ApplicationUserRepository = new ApplicationUserRepository(context);
             OrderHeaderRepository = new OrderHeaderRepository(context);
             OrderDetailRepository = new OrderDetailRepository(context);
+            ProductImageRepository = new ProductImageRepository(context);
         }
 
         public void Save()

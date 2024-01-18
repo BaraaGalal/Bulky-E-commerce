@@ -15,13 +15,11 @@ namespace E_Commerce.Web.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UserController(IUnitOfWork unitOfWork, ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _unitOfWork = unitOfWork;
-            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -75,7 +73,7 @@ namespace E_Commerce.Web.Areas.Admin.Controllers
                 {
                     applicationUser.CompanyId = null;
                 }
-                //_unitOfWork.ApplicationUserRepository.Update(applicationUser);
+                _unitOfWork.ApplicationUserRepository.Update(applicationUser);
                 _unitOfWork.Save();
 
                 _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
@@ -87,11 +85,10 @@ namespace E_Commerce.Web.Areas.Admin.Controllers
                 if (oldRole == StaticDetails.Role_Company && applicationUser.CompanyId != roleManagmentVM.ApplicationUser.CompanyId)
                 {
                     applicationUser.CompanyId = roleManagmentVM.ApplicationUser.CompanyId;
-                    //_unitOfWork.ApplicationUserRepository.Update(applicationUser);
+                    _unitOfWork.ApplicationUserRepository.Update(applicationUser);
                     _unitOfWork.Save();
                 }
             }
-
             return RedirectToAction("Index");
         }
 
@@ -102,14 +99,10 @@ namespace E_Commerce.Web.Areas.Admin.Controllers
         {
             var users = _unitOfWork.ApplicationUserRepository.GetAll(includeProperties: "Company").ToList();
 
-            var userRoles = _context.UserRoles.ToList();
-            var roles = _context.Roles.ToList();
 
             foreach (var user in users)
             {
-                var roleId = userRoles.FirstOrDefault(u => u.UserId == user.Id);
-                //user.Role = roles.FirstOrDefault(u => u.Id == roleId).Name;
-                //user.Role = _userManager.GetRolesAsync(user).GetAwaiter().GetResult().FirstOrDefault();
+                user.Role = _userManager.GetRolesAsync(user).GetAwaiter().GetResult().FirstOrDefault();
 
                 if (user.Company == null)
                 {

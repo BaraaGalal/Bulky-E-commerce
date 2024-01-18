@@ -4,18 +4,20 @@ using E_Commerve.Persistence.Repositories.IRepositories;
 
 namespace E_Commerve.Persistence.Repositories
 {
-    public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
+    public class ProductImageRepository : Repository<ProductImage>, IProductImageRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicationUserRepository(ApplicationDbContext context) : base(context)
+        public ProductImageRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public void Update(ApplicationUser applicationUser)
+        public void Update(ProductImage productImage)
         {
-            _context.ApplicationUsers.Update(applicationUser);
+            _context.ProductImages.Update(productImage);
         }
+
+
     }
 }

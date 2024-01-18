@@ -27,9 +27,10 @@ namespace E_Commerve.Persistence.Repositories
                 product.Description = entity.Description;
                 product.CategoryId = entity.CategoryId;
                 product.Author = entity.Author;
+                product.ProductImages = entity.ProductImages;
 
-                if (entity.ImageUrl != null) 
-                    product.ImageUrl = entity.ImageUrl;
+                //if (entity.ImageUrl != null) 
+                //    product.ImageUrl = entity.ImageUrl;
             }
         }
     }

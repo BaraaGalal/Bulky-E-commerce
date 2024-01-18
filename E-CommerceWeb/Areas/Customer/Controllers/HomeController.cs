@@ -21,7 +21,7 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            var products = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList();
+            var products = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category, ProductImage").ToList();
             return View(products);
         }
 
@@ -29,7 +29,7 @@ namespace E_Commerce.Web.Areas.Customer.Controllers
         {
             var shoppingCart = new ShoppingCart
             {
-                Product = _unitOfWork.ProductRepository.Get(w => w.Id == ProductId, includeProperties: "Category"),
+                Product = _unitOfWork.ProductRepository.Get(w => w.Id == ProductId, includeProperties: "Category, ProductImage"),
                 Count = 1,
                 ProductId = ProductId
             };

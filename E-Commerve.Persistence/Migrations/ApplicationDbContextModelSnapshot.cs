@@ -223,10 +223,6 @@ namespace E_CommerceWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("ListPrice")
                         .HasColumnType("float");
 
@@ -257,7 +253,6 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SWD9999001",
-                            ImageUrl = "",
                             ListPrice = 99.0,
                             Price = 90.0,
                             Price100 = 80.0,
@@ -271,7 +266,6 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "CAW777777701",
-                            ImageUrl = "",
                             ListPrice = 40.0,
                             Price = 30.0,
                             Price100 = 20.0,
@@ -285,7 +279,6 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "RITO5555501",
-                            ImageUrl = "",
                             ListPrice = 55.0,
                             Price = 50.0,
                             Price100 = 35.0,
@@ -299,7 +292,6 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "WS3333333301",
-                            ImageUrl = "",
                             ListPrice = 70.0,
                             Price = 65.0,
                             Price100 = 55.0,
@@ -313,7 +305,6 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SOTJ1111111101",
-                            ImageUrl = "",
                             ListPrice = 30.0,
                             Price = 27.0,
                             Price100 = 20.0,
@@ -327,13 +318,34 @@ namespace E_CommerceWeb.Migrations
                             CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "FOT000000001",
-                            ImageUrl = "",
                             ListPrice = 25.0,
                             Price = 23.0,
                             Price100 = 20.0,
                             Price50 = 22.0,
                             Title = "Leaves and Wonders"
                         });
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.ShoppingCart", b =>
@@ -639,6 +651,17 @@ namespace E_CommerceWeb.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("E_Commerce.Domain.Models.ProductImage", b =>
+                {
+                    b.HasOne("E_Commerce.Domain.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("E_Commerce.Domain.Models.ShoppingCart", b =>
                 {
                     b.HasOne("E_Commerce.Domain.Models.ApplicationUser", "ApplicationUser")
@@ -721,6 +744,11 @@ namespace E_CommerceWeb.Migrations
             modelBuilder.Entity("E_Commerce.Domain.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("E_Commerce.Domain.Models.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }
